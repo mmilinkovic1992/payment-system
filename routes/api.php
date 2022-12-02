@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::resource('tokens', TokenController::class)->only(['store']);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('tokens', TokenController::class)->only(['destroy']);
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

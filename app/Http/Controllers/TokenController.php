@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TokenRequest;
 use App\Http\Resources\TokenResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TokenController extends Controller
 {
@@ -15,6 +16,15 @@ class TokenController extends Controller
         return [
             'message' => trans('common.token_success'),
             'body' => TokenResource::make($token)
+        ];
+    }
+
+    public function destroy()
+    {
+        Auth::user()->tokens()->delete();
+
+        return [
+            'message' => trans('common.token_deleted'),
         ];
     }
 }
