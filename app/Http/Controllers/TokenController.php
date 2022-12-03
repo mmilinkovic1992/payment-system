@@ -13,18 +13,19 @@ class TokenController extends Controller
     {
         $token = $request->attempter()->createToken($request->token_name ?? '');
 
-        return [
+
+        return response()->json([
             'message' => trans('common.token_success'),
             'body' => TokenResource::make($token)
-        ];
+        ], 201);
     }
 
     public function destroy()
     {
         Auth::user()->tokens()->delete();
 
-        return [
-            'message' => trans('common.token_deleted'),
-        ];
+        return response()->json([
+           'message' =>  trans('common.token_deleted')
+        ], 200);
     }
 }
