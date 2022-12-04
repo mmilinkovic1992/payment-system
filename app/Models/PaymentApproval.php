@@ -57,4 +57,9 @@ class PaymentApproval extends Model
     {
         return $this->morphTo();
     }
+
+    public function isApproved(): bool
+    {
+        return $this->status === "APPROVED";
+    }
 }

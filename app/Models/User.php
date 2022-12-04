@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -69,5 +70,10 @@ class User extends Authenticatable
     public function approvals(): HasMany
     {
         return $this->hasMany(PaymentApproval::class);
+    }
+
+    public function scopeApprovers(Builder $query)
+    {
+        $query->where('type', 'approver');
     }
 }
