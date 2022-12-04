@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaymentApprovalController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TravelPaymentController;
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('tokens', TokenController::class)->only(['destroy']);
     Route::resource('payments', PaymentController::class)->except(['create', 'edit', 'index']);
     Route::resource('travel-payments', TravelPaymentController::class)->except(['create', 'edit', 'index']);
+    Route::resource('payment-approvals', PaymentApprovalController::class)->only('store', 'update');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
