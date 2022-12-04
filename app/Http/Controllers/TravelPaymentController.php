@@ -46,9 +46,12 @@ class TravelPaymentController extends Controller
      * @param UpdateTravelPaymentRequest $request
      * @param TravelPayment $travelPayment
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(UpdateTravelPaymentRequest $request, TravelPayment $travelPayment): JsonResponse
     {
+        $this->authorize('update', $travelPayment);
+
         $travelPayment->update($request->getData());
 
         return response()->json([
