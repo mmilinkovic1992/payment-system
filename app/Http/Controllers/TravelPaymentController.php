@@ -34,11 +34,14 @@ class TravelPaymentController extends Controller
      * Display the specified resource.
      *
      * @param TravelPayment $travelPayment
-     * @return Response
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function show(TravelPayment $travelPayment)
+    public function show(TravelPayment $travelPayment): JsonResponse
     {
-        //
+        $this->authorize('view', $travelPayment);
+
+        return response()->json(TravelPaymentResource::make($travelPayment), 200);
     }
 
     /**
