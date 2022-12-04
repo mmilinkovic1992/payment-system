@@ -8,6 +8,7 @@ use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class PaymentController extends Controller
 {
@@ -30,8 +31,8 @@ class PaymentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * @param Payment $payment
+     * @return Response
      */
     public function show(Payment $payment)
     {
@@ -42,7 +43,7 @@ class PaymentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdatePaymentRequest  $request
-     * @param  \App\Models\Payment  $payment
+     * @param Payment $payment
      * @return JsonResponse
      */
     public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
@@ -59,11 +60,11 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * @param Payment $payment
+     * @return Response
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
     }
 }
