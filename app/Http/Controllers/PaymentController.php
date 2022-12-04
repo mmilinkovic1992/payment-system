@@ -6,6 +6,7 @@ use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
@@ -15,9 +16,12 @@ class PaymentController extends Controller
      *
      * @param StorePaymentRequest $request
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
+        $this->authorize('create', Payment::class);
+
         $payment = Payment::create($request->getData());
 
         return response()->json(PaymentResource::make($payment), 201);
@@ -39,11 +43,15 @@ class PaymentController extends Controller
      *
      * @param  \App\Http\Requests\UpdatePaymentRequest  $request
      * @param  \App\Models\Payment  $payment
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function update(UpdatePaymentRequest $request, Payment $payment)
+    public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
     {
-        //
+        $payment->update($request->getData());
+
+        return response()->json([
+            PaymentResource::make($payment)
+        ], 200);
     }
 
     /**

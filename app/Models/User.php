@@ -42,6 +42,11 @@ class User extends Authenticatable
      */
     protected $casts = [];
 
+    public function isAdmin()
+    {
+        return $this->type === "admin";
+    }
+
     /**
      * @return HasMany
      */
