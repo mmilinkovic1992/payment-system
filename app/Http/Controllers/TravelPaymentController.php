@@ -19,6 +19,8 @@ class TravelPaymentController extends Controller
      */
     public function store(StoreTravelPaymentRequest $request): JsonResponse
     {
+        $this->authorize('create', TravelPayment::class);
+
         $payment = TravelPayment::create($request->getData());
 
         return response()->json(PaymentResource::make($payment), 201);
