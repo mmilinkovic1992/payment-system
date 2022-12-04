@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTravelPaymentRequest;
 use App\Http\Requests\UpdateTravelPaymentRequest;
 use App\Http\Resources\PaymentResource;
+use App\Http\Resources\TravelPaymentResource;
 use App\Models\Payment;
 use App\Models\TravelPayment;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class TravelPaymentController extends Controller
 {
@@ -16,6 +18,7 @@ class TravelPaymentController extends Controller
      *
      * @param StoreTravelPaymentRequest $request
      * @return JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(StoreTravelPaymentRequest $request): JsonResponse
     {
@@ -23,14 +26,14 @@ class TravelPaymentController extends Controller
 
         $payment = TravelPayment::create($request->getData());
 
-        return response()->json(PaymentResource::make($payment), 201);
+        return response()->json(TravelPaymentResource::make($payment), 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TravelPayment  $travelPayment
-     * @return \Illuminate\Http\Response
+     * @param TravelPayment $travelPayment
+     * @return Response
      */
     public function show(TravelPayment $travelPayment)
     {
@@ -40,20 +43,24 @@ class TravelPaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTravelPaymentRequest  $request
-     * @param  \App\Models\TravelPayment  $travelPayment
-     * @return \Illuminate\Http\Response
+     * @param UpdateTravelPaymentRequest $request
+     * @param TravelPayment $travelPayment
+     * @return JsonResponse
      */
-    public function update(UpdateTravelPaymentRequest $request, TravelPayment $travelPayment)
+    public function update(UpdateTravelPaymentRequest $request, TravelPayment $travelPayment): JsonResponse
     {
-        //
+        $travelPayment->update($request->getData());
+
+        return response()->json([
+            TravelPaymentResource::make($travelPayment)
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\TravelPayment  $travelPayment
-     * @return \Illuminate\Http\Response
+     * @param TravelPayment $travelPayment
+     * @return Response
      */
     public function destroy(TravelPayment $travelPayment)
     {
