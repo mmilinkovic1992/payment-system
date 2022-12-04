@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('payment_approvals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index()->constrained();
-            $table->foreignId('payment_id')->index()->constrained();
+            $table->foreignId('payment_id')->index();
             $table->string('payment_type');
             $table->enum('status', ['APPROVED', "DISAPPROVED"]);
             $table->timestamps();
