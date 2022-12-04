@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Payment extends Model
+class PaymentApproval extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -19,8 +19,9 @@ class Payment extends Model
      */
     protected $fillable = [
         'user_id',
-        'total_amount',
-        'created_at',
+        'payment_id',
+        'payment_type',
+        'status',
         'updated_at',
         'deleted_at'
     ];
@@ -48,10 +49,12 @@ class Payment extends Model
     }
 
     /**
-     * @return MorphOne
+     * Get the parent payable model (payment or travel payment).
+     *
+     * @return MorphTo
      */
-    public function paymentApproval(): MorphOne
+    public function payment(): MorphTo
     {
-        return $this->morphOne(PaymentApproval::class, 'payment');
+        return $this->morphTo();
     }
 }
