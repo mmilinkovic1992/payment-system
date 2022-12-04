@@ -55,6 +55,6 @@ class PaymentPolicy
      */
     public function delete(User $user, Payment $payment)
     {
-        //
+        return $user->id === $payment->user_id;
     }
 }

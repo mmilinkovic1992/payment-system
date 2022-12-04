@@ -42,9 +42,10 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePaymentRequest  $request
+     * @param \App\Http\Requests\UpdatePaymentRequest $request
      * @param Payment $payment
      * @return JsonResponse
+     * @throws AuthorizationException
      */
     public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
     {
@@ -62,9 +63,16 @@ class PaymentController extends Controller
      *
      * @param Payment $payment
      * @return Response
+     * @throws AuthorizationException
      */
-    public function destroy(Payment $payment)
+    public function destroy(Payment $payment): JsonResponse
     {
+        $this->authorize('delete', $payment);
+
         $payment->delete();
+
+        return response()->json([
+            'message' => trans('common.payment_deleted')
+        ], 200);
     }
 }
