@@ -42,9 +42,9 @@ class User extends Authenticatable
      */
     protected $casts = [];
 
-    public function isAdmin()
+    public function isApprover()
     {
-        return $this->type === "admin";
+        return $this->type === 'approver';
     }
 
     /**

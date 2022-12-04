@@ -31,7 +31,7 @@ class PaymentPolicy
      */
     public function create(User $user)
     {
-        return $user->isAdmin();
+        return $user->isApprover();
     }
 
     /**
