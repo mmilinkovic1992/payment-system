@@ -19,7 +19,9 @@ class PaymentApprovalController extends Controller
      */
     public function store(StorePaymentApprovalRequest $request): JsonResponse
     {
-        $paymentApproval = PaymentApproval::create($request->getData());
+        $this->authorize('create', PaymentApproval::class);
+
+        PaymentApproval::create($request->getData());
 
         return response()->json([
             'message' => trans('common.approval_created')
@@ -35,6 +37,8 @@ class PaymentApprovalController extends Controller
      */
     public function update(UpdatePaymentApprovalRequest $request, PaymentApproval $paymentApproval): JsonResponse
     {
+        $this->authorize('update', $paymentApproval);
+
         $paymentApproval->update($request->getData());
 
         return response()->json([
