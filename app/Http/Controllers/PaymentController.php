@@ -47,6 +47,8 @@ class PaymentController extends Controller
      */
     public function update(UpdatePaymentRequest $request, Payment $payment): JsonResponse
     {
+        $this->authorize('update', $payment);
+
         $payment->update($request->getData());
 
         return response()->json([
