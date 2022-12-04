@@ -20,7 +20,7 @@ class PaymentPolicy
      */
     public function view(User $user, Payment $payment)
     {
-        //
+        return $user->id === $payment->user_id;
     }
 
     /**

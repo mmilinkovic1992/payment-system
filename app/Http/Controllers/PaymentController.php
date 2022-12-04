@@ -32,11 +32,14 @@ class PaymentController extends Controller
      * Display the specified resource.
      *
      * @param Payment $payment
-     * @return Response
+     * @return JsonResponse
+     * @throws AuthorizationException
      */
-    public function show(Payment $payment)
+    public function show(Payment $payment): JsonResponse
     {
-        //
+        $this->authorize('view', $payment);
+
+        return response()->json(PaymentResource::make($payment), 200);
     }
 
     /**
